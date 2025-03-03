@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/littlerobinson/jenkins-etl-skeleton.git'
+                git clone 'https://github.com/littlerobinson/jenkins-etl-skeleton.git'
             }
         }
 
