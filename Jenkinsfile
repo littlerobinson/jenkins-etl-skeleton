@@ -13,16 +13,22 @@ pipeline {
                 url: 'https://github.com/littlerobinson/jenkins-etl-skeleton.git'
             }
         }
+        
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t ${DOCKER_IMAGE} .'
+            }
+        }
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'docker exec ${DOCKER_IMAGE} /bin/sh -c "pip install -r requirements.txt"'
             }
         }
 
         stage('Run Unit Tests') {
             steps {
-                sh 'pytest --junitxml=unit-tests.xml'
+                sh ' docker exec ${DOCKER_IMAGE} /bin/sh -c "pytest --junitxml=unit-tests.xml"'
             }
             post {
                 always {
@@ -31,11 +37,6 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t ${DOCKER_IMAGE} .'
-            }
-        }
 
         stage('Run Docker Container') {
             steps {
