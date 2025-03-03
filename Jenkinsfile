@@ -20,15 +20,21 @@ pipeline {
             }
         }
 
+        stage('Run Docker Image') {
+            steps {
+                sh 'docker run -it ${DOCKER_IMAGE} bash'
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
-                sh 'docker exec ${DOCKER_IMAGE} /bin/sh -c "pip install -r requirements.txt"'
+                sh 'pip install -r requirements.txt'
             }
         }
 
         stage('Run Unit Tests') {
             steps {
-                sh ' docker exec ${DOCKER_IMAGE} /bin/sh -c "pytest --junitxml=unit-tests.xml"'
+                sh 'pytest --junitxml=unit-tests.xml'
             }
             post {
                 always {
