@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 # Step 1: Extract
 def extract_data(file_path):
     """Extracts data from a CSV file."""
@@ -11,24 +12,26 @@ def extract_data(file_path):
         print(f"Error in data extraction: {e}")
         return None
 
+
 # Step 2: Transform
 def transform_data(data):
     """Transforms the data by cleaning and adding new features."""
     try:
         # Drop rows with missing values
-        data_cleaned = data.dropna()
-        
+        data_cleaned = data.dropna().copy()
+
         # Add a new column for Tax (assuming a flat 10% tax rate on salary)
-        data_cleaned['tax'] = data_cleaned['salary'] * 0.1
-        
+        data_cleaned["tax"] = data_cleaned["salary"] * 0.1
+
         # Calculate net salary after tax
-        data_cleaned['net_salary'] = data_cleaned['salary'] - data_cleaned['tax']
-        
+        data_cleaned["net_salary"] = data_cleaned["salary"] - data_cleaned["tax"]
+
         print("Data transformation successful.")
         return data_cleaned
     except Exception as e:
         print(f"Error in data transformation: {e}")
         return None
+
 
 # Step 3: Load
 def load_data(data, output_file_path):
@@ -39,6 +42,7 @@ def load_data(data, output_file_path):
     except Exception as e:
         print(f"Error in data loading: {e}")
 
+
 # Main ETL function
 def etl_process(input_file, output_file):
     data = extract_data(input_file)
@@ -47,7 +51,8 @@ def etl_process(input_file, output_file):
         if transformed_data is not None:
             load_data(transformed_data, output_file)
 
+
 if __name__ == "__main__":
-    input_file = 'input_data.csv'
-    output_file = 'output_data.csv'
+    input_file = "data/input_data.csv"
+    output_file = "data/output_data.csv"
     etl_process(input_file, output_file)
