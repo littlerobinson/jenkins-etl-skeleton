@@ -37,10 +37,10 @@ pipeline {
                 '''
             }
             post {
-                always {
-                    junit '/app/unit-tests.xml'  // Publish test results
-                }
+            always {
+                junit 'app/unit-tests.xml'
             }
+        }
         }
 
 
