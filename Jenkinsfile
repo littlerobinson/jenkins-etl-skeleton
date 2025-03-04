@@ -33,7 +33,7 @@ pipeline {
                     docker run --rm \
                         -e PYTHONPATH=/app \
                         ${DOCKER_IMAGE} \
-                        bash -c "pytest --junitxml=unit-tests.xml"
+                        bash -c "pytest --junitxml=/app/unit-tests.xml"
                 '''
             }
             post {
