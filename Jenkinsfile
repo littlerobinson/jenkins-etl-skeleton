@@ -31,7 +31,7 @@ pipeline {
                 sh '''
                     docker run --rm \
                         -e PYTHONPATH=/app \
-                        -v /tmp:/app
+                        -v /tmp:/app \
                         ${DOCKER_IMAGE} \
                         bash -c "pytest --junitxml=/tmp/unit-tests.xml"
                 '''
