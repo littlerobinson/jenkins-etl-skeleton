@@ -22,7 +22,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'docker exec -it ${DOCKER_IMAGE} pip install -r requirements.txt'
+                sh 'docker run --rm -it bash -c "pip install -r requirements.txt"'
             }
         }
 
