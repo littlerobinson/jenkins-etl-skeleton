@@ -29,6 +29,7 @@ pipeline {
 
         stage('Run Unit Tests') {
             steps {
+                sh 'docker run --rm ${DOCKER_IMAGE} bash -c "export PYTHONPATH="${PYTHONPATH}:/app"'
                 sh 'docker run --rm ${DOCKER_IMAGE} bash -c "pytest --junitxml=unit-tests.xml"'
             }
             post {
