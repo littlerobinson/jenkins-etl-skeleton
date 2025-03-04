@@ -31,15 +31,16 @@ pipeline {
                 sh '''
                     docker run --rm \
                         -e PYTHONPATH=/app \
+                        -v /tmp:/app
                         ${DOCKER_IMAGE} \
-                        bash -c "pytest --junitxml=/app/unit-tests.xml"
+                        bash -c "pytest --junitxml=/tmp/unit-tests.xml"
                 '''
             }
-            // post {
-            //     always {
-            //         junit 'app/unit-tests.xml'
-            //     }
-            // }
+            post {
+                always {
+                    junit 'tmp/unit-tests.xml'
+                }
+            }
         }
 
 
@@ -58,13 +59,15 @@ pipeline {
     }
 
     post {
+        always {
+            // Clean up workspace and remove dangling Docker images
+            sh 'docker system prune -f'
+        }
         success {
-            echo 'ETL Pipeline completed successfully!'
-            // Optionally send notification (Slack/Email)
+            echo 'Pipeline completed successfully!'
         }
         failure {
-            echo 'ETL Pipeline failed.'
-            // Optionally send notification (Slack/Email)
+            echo 'Pipeline failed. Check logs for errors.'
         }
     }
 }
