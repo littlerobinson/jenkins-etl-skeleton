@@ -29,7 +29,7 @@ pipeline {
 
         stage('Run Unit Tests') {
             steps {
-                sh 'docker exec -it ${DOCKER_IMAGE} pytest --junitxml=unit-tests.xml'
+                sh 'docker run --rm ${DOCKER_IMAGE} bash -c "pytest --junitxml=unit-tests.xml"'
             }
             post {
                 always {
