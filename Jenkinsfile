@@ -36,11 +36,11 @@ pipeline {
                         bash -c "pytest --junitxml=/app/unit-tests.xml"
                 '''
             }
-            post {
-            always {
-                junit 'app/unit-tests.xml'
-            }
-        }
+            // post {
+            //     always {
+            //         junit 'app/unit-tests.xml'
+            //     }
+            // }
         }
 
 
